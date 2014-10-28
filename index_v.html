@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang='zh'>
+<head>
+	<meta charset="UTF-8">
+	<title>touch-slider vertical</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+	<script type="text/javascript" src="js/zepto.min.js"></script>
+	<script type="text/javascript" src="js/zepto.fx.js"></script>
+    <link rel="stylesheet" href="css/app.css"/>
+	<style type="text/css">
+		html,body{
+		    padding: 0;
+		    margin: 0;
+		    width: 100%;
+		    height: 100%;
+            background: url(img/bg.jpg) no-repeat center;
+            background-size:cover ;
+		}
+		.main{
+		    width: 100%;
+		    height: 100%;
+/*
+		    background: #fff;
+*/
+		    overflow: hidden;
+		    position: relative;
+		}
+		.page{
+		    width: 100%;
+		    height: 100%;
+/*
+		    background: #0f0;
+*/
+		    font-size: 1.5em;
+		    text-align: center;
+		}
+		p{
+			margin: 0;
+			font-size: 2em;
+		}
+		/*.page_1{
+		    background: url("img/testPic.png") no-repeat center,url("img/test1.jpg") no-repeat center;
+            background-size: 100%;
+		}
+		.page_2{
+            background: url("img/test2.jpg") no-repeat center;
+            background-size: 100%;
+		}
+
+		.page_3{
+            background: url("img/test3.jpg") no-repeat center;
+            background-size: 100%;
+		}
+
+		.page_4{
+            background: url("img/test4.jpg") no-repeat center;
+            background-size: 100%;
+		}
+
+		.page_5{
+            background: url("img/test5.jpg") no-repeat center;
+            background-size: 100%;
+		}
+
+		.page_6{
+            background: url("img/test6.jpg") no-repeat center;
+            background-size: 100%;
+		}*/
+
+	</style>
+	<script type="text/javascript" src="js/zepto.touchslider.js"></script>
+	<!--<script type="text/javascript" src="../clip-Box/zepto.clipBox.js"></script>-->
+	<script type="text/javascript">
+		$(function(){
+			$('.main').touchSlider({direction: 'v',itemSelector:'.page'});
+		});
+	</script>
+</head>
+<body>
+	<div class="main">
+	    <div class="page page_1">page<p>1</p>
+            <a href="http://www.j-design.com.cn" target="_blank">John Test</a>
+
+            <div id="plane" class="frame ">
+                <div class="frame-inner">
+                    <img width="100%" src="img/plane.png">
+                </div>
+            </div>
+        </div>
+	    <div class="page page_2">page<p>2</p><a href="http://www.j-design.com.cn" target="_blank">John Test</a></div>
+	    <div class="page page_3">page<p>3</p><a href="http://www.j-design.com.cn" target="_blank">John Test</a></div>
+	    <div class="page page_4">page<p>4</p><a href="http://www.j-design.com.cn" target="_blank">John Test</a></div>
+	    <div class="page page_5">page<p>5</p><a href="http://www.j-design.com.cn" target="_blank">John Test</a></div>
+	    <div class="page page_6">page<p>6</p><a href="http://www.j-design.com.cn" target="_blank">John Test</a></div>
+	</div>
+</body>
+<script>
+    $("#plane").addClass("animate");
+</script>
+</html>
