@@ -1,7 +1,7 @@
 ;(function($){
 
     //干掉页面bounce效果
-    $(document.body).on('touchmove',function(e){
+    $(document).on('touchmove',function(e){
         e.preventDefault();
         e.stopPropagation();
     });
@@ -184,7 +184,7 @@
             var percent = Math.abs(step)/distance,
                 isEnd=curItemIndex==itemLen-1,
                 animProperty,
-                nextIndex =  isEnd ? 0 : curItemIndex- flag,
+                nextIndex =  isEnd&&isCircle&&flag==-1 ? 0 : curItemIndex- flag,
                 duration=slideDuration/*,
                 oldTarget = flag*-distance,
                 animTarget = percent<opts.slidePercent && !isClick ? distance+'px' : 0,
@@ -209,10 +209,12 @@
                     offset+=offsetPer*flag;
                 }
                 animProperty = isDirectionV ? {'translate3d': '0,'+offset+'%,0'} : {'translate3d': offset+'%,0,0'};
-                currentOffset=offset;
+
+            }
 
                 $slider.animate(animProperty,duration,effect,function(){
                     isAnimate=false;
+                    currentOffset=offset;
 
                     $items.eq(curItemIndex).removeClass("current");
 
@@ -225,42 +227,6 @@
                         app.recordState(router+hash);
                     }
                 })
-                /*currentItem.removeClass("current").animate({'translate3d':isDirectionV
-                    ? '0,'+oldTarget+'px,0':oldTarget+'px,0,0'},slideDuration*1.618,effect,function(){
-                    $(this).removeClass("active");
-                });
-                moveItemEl.addClass("current").
-                    animate(animProperty, slideDuration, effect,function () {
-                        curItemIndex = nextIndex;
-                        currentItem = $items.eq(curItemIndex);
-                        opts.onMoveEnd(curItemIndex);
-                        isAnimate=false;
-                        app.showPageAnimate(moveItemEl);
-                        moveItemEl = null;
-                        //add history state
-                        if(router){
-                            var hash=curItemIndex==0? "": curItemIndex;
-                            app.recordState(router+hash);
-                        }
-                        $(this).removeClass("active");
-                    });*/
-            }else{
-              /*  currentItem.animate({'translate3d': '0,0,0'},slideDuration*0.618,effect,function(){
-                    $(this).removeClass("active");
-                    isAnimate=false;
-                });
-                moveItemEl.animate({'translate3d':isDirectionV
-                    ? '0,'+(-oldTarget)+'px,0':(-oldTarget)+'px,0,0'},slideDuration,effect,function(){
-                    moveItemEl = null;
-                    $(this).removeClass("active");
-                });*/
-                animProperty = isDirectionV ? {'translate3d': '0,'+offset+'%,0'} : {'translate3d': offset+'%,0,0'};
-                $slider.animate(animProperty,slideDuration,effect,function(){
-                    isAnimate=false;
-                })
-
-            }
-
 
         }
 
@@ -306,7 +272,7 @@
         slidePercent: app.slidePercent,  //拖动超过多少比例后才翻页
         itemSelector: 'div', //子元素选择器
         startIndex:0,//开始的页码
-        isCircle:true,
+        isCircle:false,
         onMoveEnd: function(index){ //滑动结束后事件
             //console.log(index);
         }
