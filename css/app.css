@@ -16,7 +16,7 @@
 #plane.animate{
     -webkit-animation:plane 1.5s 0s 1 ease forwards  ;
 }
- @-webkit-keyframes plane{
+ @-webkit-keyframes plane{   /**/
       0%{
           -webkit-transform:translateX(-100%) translateY(30%) scaleX(0.3) scaleY(0.3);
       }
