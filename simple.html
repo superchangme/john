@@ -46,7 +46,7 @@
             <circle xmlns="http://www.w3.org/2000/svg" cx="82.97%" cy="47.6%" r="4" fill="#FFF"></circle>
         </svg>
     </div>
-    <div class="page page_1 current"><!--111111111111111111111111111111111111111111111111111111111111111111111111111111111-->
+    <div class="page page_1 current" data-hash="page_1"><!--111111111111111111111111111111111111111111111111111111111111111111111111111111111-->
         <div id="plane" class="frame ">
             <div class="frame-inner">
                 <!--<img width="100%" src="img/plane.png">-->
@@ -82,7 +82,7 @@
         </div>
     </div>
 
-    <div class="page page_2"><!--222222222222222222222222222222222222222222222222222222222222222222222222222222222-->
+    <div class="page page_2"  data-hash="page_2"><!--222222222222222222222222222222222222222222222222222222222222222222222222222222222-->
         <div id="master" class="frame ">
             <div class="frame-inner">
                 <!--<img width="100%" src="img/master.png">-->
@@ -119,7 +119,7 @@
             </div>
         </div>
     </div>
-    <div class="page page_3"><!--333333333333333333333333333333333333333333333333333333333333333333333333333333333-->
+    <div class="page page_3"  data-hash="page_3"><!--333333333333333333333333333333333333333333333333333333333333333333333333333333333-->
         <div id="cloud" class="frame ">
             <div class="frame-inner">
                 <!--<img width="100%" src="img/cloud.png">-->
@@ -156,30 +156,75 @@
             </div>
         </div>
     </div>
-    <div class="page page_4">page<p>4</p></div>
-    <div class="page page_5">page<p>5</p></div>
+    <div class="page page_4"  data-hash="page_4">page<p>4</p></div>
+    <div class="page page_5"  data-hash="page_5">page<p>5</p></div>
 </div>
 </body>
-<script type="text/javascript" src="js/app.js"></script>
+<!--<script type="text/javascript" src="js/app.js"></script>-->
 <script type="text/javascript">
     $(function(){
-                var $pages=$(".main .page"),$current=$pages.filter(".current"),effect="cubic-bezier(0.42,0,0.58,1)";
+                var app=g={
+                            changeHash:false,
+                            currentPage:null,
+                            current:1
+                        },hashMap={"#page_1":".page_1","#page_2":".page_2","#page_3":"page_3","#page_4":".page_4","#page_5":".page_5"},
+                        $pages=$(".main .page"),
+                        isAnimate=false,
+                        $current=$pages.filter(".current"),
+                        effect="cubic-bezier(0.42,0,0.58,1)";
+
+                function recordState(hash,flag){
+                    var pageSelector=hashMap[window.location.hash];
+                    g.changeHash=true;
+                    current=pageSelector&&pageSelector.slice(-1);
+                    setTimeout(function(){
+                        g.changeHash = false;
+                    },100);
+                    window.location.href=window.location.href.split("#")[0]+"#"+hash;
+                    return true;
+                };
+
+                window.addEventListener("popstate",function(e){
+                    loadPage();
+                });
+                function loadPage(){
+                    var pageSelector=hashMap[window.location.hash];
+                    if( g.changeHash==false&&pageSelector  ){
+                        var pageEl=$(pageSelector+".page"),page=parseInt(pageSelector.slice(-1)),clas;
+                        if(pageEl.length){
+                            if(page> g.current){
+                                clas="up";
+                            }else{
+                                clas="down";
+                            }
+                            pageAnimate(pageEl,clas);
+                        }
+                    }else if(!(g.current==1&&(!pageSelector||pageSelector==".page_1"))){
+                        pageAnimate($pages.eq(0),"down");
+                    }
+                }
+                loadPage();
+                document.addEventListener('touchmove', function (event) {
+                    event.preventDefault();
+                }, false);
+
                 $(document).swipeUp(function(){
-                    var next=$current.next(".page");
-                    next.length&&next.addClass("up active").animate({translate3d:"0,0,0"},618,effect,function(){
-                            $(this).removeClass("up active");
-                            $current.removeClass("current");
-                            $current=$(this).addClass("current").attr("style","");
-                    })
+                    pageAnimate($current.next(".page"),"up");
                 });
                 $(document).swipeDown(function(){
-                    var prev=$current.prev(".page");
-                    prev.length&&prev.addClass("down active").animate({translate3d:"0,0,0"},618,effect,function(){
-                        $(this).removeClass("down active");
-                        $current.removeClass("current");
-                        $current=$(this).addClass("current").attr("style","");
-                    })
+                    pageAnimate($current.prev(".page"),"down");
                 });
+                function pageAnimate(next,clas){
+                    if(isAnimate){
+                        return;
+                    }
+                    next.length&&(isAnimate=true)&&recordState(next.data("hash"))&&next.addClass("active "+clas).animate({translate3d:"0,0,0"},618,effect,function(){
+                        $current.removeClass("current");
+                        $current=$(this).addClass("current").removeClass("active "+clas).attr("style","");
+                        isAnimate=false;
+                    })
+                }
+
 //            $('.page_2').addClass("current");
                 //声音播放
                 $("#musicBtn").on("switch",function(){
