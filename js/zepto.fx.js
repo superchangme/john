@@ -4,13 +4,13 @@
 
 ;(function($, undefined){
   var prefix = '', eventPrefix, endEventName, endAnimationName,
-    vendors = { Webkit: 'webkit', Moz: '', O: 'o' },
-    document = window.document, testEl = document.createElement('div'),
-    supportedTransforms = /^((translate|rotate|scale)(X|Y|Z|3d)?|matrix(3d)?|perspective|skew(X|Y)?)$/i,
-    transform,
-    transitionProperty, transitionDuration, transitionTiming, transitionDelay,
-    animationName, animationDuration, animationTiming, animationDelay,
-    cssReset = {}
+      vendors = { Webkit: 'webkit', Moz: '', O: 'o' },
+      document = window.document, testEl = document.createElement('div'),
+      supportedTransforms = /^((translate|rotate|scale)(X|Y|Z|3d)?|matrix(3d)?|perspective|skew(X|Y)?)$/i,
+      transform,
+      transitionProperty, transitionDuration, transitionTiming, transitionDelay,
+      animationName, animationDuration, animationTiming, animationDelay,
+      cssReset = {}
 
   function dasherize(str) { return str.replace(/([a-z])([A-Z])/, '$1-$2').toLowerCase() }
   function normalizeEvent(name) { return eventPrefix ? eventPrefix + name : name.toLowerCase() }
@@ -25,13 +25,13 @@
 
   transform = prefix + 'transform'
   cssReset[transitionProperty = prefix + 'transition-property'] =
-  cssReset[transitionDuration = prefix + 'transition-duration'] =
-  cssReset[transitionDelay    = prefix + 'transition-delay'] =
-  cssReset[transitionTiming   = prefix + 'transition-timing-function'] =
-  cssReset[animationName      = prefix + 'animation-name'] =
-  cssReset[animationDuration  = prefix + 'animation-duration'] =
-  cssReset[animationDelay     = prefix + 'animation-delay'] =
-  cssReset[animationTiming    = prefix + 'animation-timing-function'] = ''
+      cssReset[transitionDuration = prefix + 'transition-duration'] =
+          cssReset[transitionDelay    = prefix + 'transition-delay'] =
+              cssReset[transitionTiming   = prefix + 'transition-timing-function'] =
+                  cssReset[animationName      = prefix + 'animation-name'] =
+                      cssReset[animationDuration  = prefix + 'animation-duration'] =
+                          cssReset[animationDelay     = prefix + 'animation-delay'] =
+                              cssReset[animationTiming    = prefix + 'animation-timing-function'] = ''
 
   $.fx = {
     off: (eventPrefix === undefined && testEl.style.transitionProperty === undefined),
@@ -49,7 +49,7 @@
     if ($.isPlainObject(duration))
       ease = duration.easing, callback = duration.complete, delay = duration.delay, duration = duration.duration
     if (duration) duration = (typeof duration == 'number' ? duration :
-                    ($.fx.speeds[duration] || $.fx.speeds._default)) / 1000
+        ($.fx.speeds[duration] || $.fx.speeds._default)) / 1000
     if (delay) delay = parseFloat(delay) / 1000
     return this.anim(properties, duration, ease, callback, delay)
   }
@@ -104,7 +104,7 @@
       setTimeout(function(){
         if (fired) return
         wrappedCallback.call(that)
-      }, (duration * 1000) + 25)
+      }, ((duration + delay) * 1000) + 25)
     }
 
     // trigger page reflow so new elements can animate

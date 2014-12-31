@@ -1,104 +1,221 @@
+
 <!doctype html>
 <html lang='zh'>
 <head>
 	<meta charset="UTF-8">
-	<title>touch-slider vertical</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <script type="text/javascript" src="js/zepto.min.js"></script>
+	<title>情有独“John”</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+	<script type="text/javascript" src="js/zepto.min.js"></script>
 	<script type="text/javascript" src="js/zepto.fx.js"></script>
-    <link rel="stylesheet" href="css/app.css"/>
-	<style type="text/css">
-		html,body{
-		    padding: 0;
-		    margin: 0;
-		    width: 100%;
-		    height: 100%;
-            background: url(img/bg.jpg) no-repeat center;
-            background-size:cover ;
-		}
-		.main{
-		    width: 100%;
-		    height: 100%;
-            position: absolute;
-/*
-		    background: #fff;
-*/
-		    overflow: hidden;
-		}
-		.page{
-		    width: 100%;
-		    height: 100%;
-            position: relative;
-		    font-size: 1.5em;
-		    text-align: center;
-		}
-		p{
-			margin: 0;
-			font-size: 2em;
-		}
-		/*.page_1{
-		    background: url("img/testPic.png") no-repeat center,url("img/test1.jpg") no-repeat center;
-            background-size: 100%;
-		}
-		.page_2{
-            background: url("img/test2.jpg") no-repeat center;
-            background-size: 100%;
-		}
+	<link rel="stylesheet" href="css/app.css"/>
 
-		.page_3{
-            background: url("img/test3.jpg") no-repeat center;
-            background-size: 100%;
-		}
-
-		.page_4{
-            background: url("img/test4.jpg") no-repeat center;
-            background-size: 100%;
-		}
-
-		.page_5{
-            background: url("img/test5.jpg") no-repeat center;
-            background-size: 100%;
-		}
-
-		.page_6{
-            background: url("img/test6.jpg") no-repeat center;
-            background-size: 100%;
-		}*/
-
-	</style>
 </head>
 <body>
+<audio src="source/music.mp3" id="bgAudio" autoplay="" loop="" ></audio>
+<div class="scr page_loading">
+	<div id="" class="loadingTxt">即将进入...</div>
+	<div id="block_1" class="barlittle"></div>
+	<div id="block_2" class="barlittle"></div>
+	<div id="block_3" class="barlittle"></div>
+	<div id="block_4" class="barlittle"></div>
+	<div id="block_5" class="barlittle"></div>
+</div>
+<!--<div class="scr mask"></div>-->
+<div class="scr volume">
+	<button class="volumeOff sprite volumeAll" id="musicBtn">
 
-	<div class="main" id="app">
-	    <div class="page page_1">page<p>1</p>
-            <form action="abc" onsubmit="return false;"><input/></form>
-            <a href="http://www.j-design.com.cn" target="_blank">John Test</a>
+	</button>
+</div>
 
-            <div id="plane" class="frame ">
-                <div class="frame-inner">
-                    <img width="100%" src="img/plane.png">
-                </div>
-            </div>
-        </div>
-	    <div class="page page_2">page<p>2</p><a href="http://www.j-design.com.cn" target="_blank">John Test</a></div>
-	    <div class="page page_3">page<p>3</p><a href="http://www.j-design.com.cn" target="_blank">John Test</a></div>
-	    <div class="page page_4">page<p>4</p><a href="http://www.j-design.com.cn" target="_blank">John Test</a></div>
-	    <div class="page page_5">page<p>5</p><a href="http://www.j-design.com.cn" target="_blank">John Test</a></div>
-	    <div class="page page_6">page<p>6</p><a href="http://www.j-design.com.cn" target="_blank">John Test</a></div>
+<div class="main" id="app">
+	<div class="svg">
+		<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" version="1.1">
+			<line xmlns="http://www.w3.org/2000/svg" x1="47%" y1="11.64%" x2="7.81%" y2="13.74%" style="stroke:rgb(255,255,255);stroke-width:1"></line>
+			<line xmlns="http://www.w3.org/2000/svg" x1="7.81%" y1="13.74%" x2="82%" y2="26.5%" style="stroke:rgb(255,255,255);stroke-width:1"></line>
+			<line xmlns="http://www.w3.org/2000/svg" x1="82%" y1="26.5%" x2="11.56%" y2="39%" style="stroke:rgb(255,255,255);stroke-width:1"></line>
+			<line xmlns="http://www.w3.org/2000/svg" x1="11.56%" y1="39%" x2="82.97%" y2="47.6%" style="stroke:rgb(255,255,255);stroke-width:1"></line>
+			<line xmlns="http://www.w3.org/2000/svg" x1="82.97%" y1="47.6%" x2="48.16%" y2="52%" style="stroke:rgb(255,255,255);stroke-width:1"></line>
+
+
+			<circle xmlns="http://www.w3.org/2000/svg" cx="7.81%" cy="13.74%" r="4" fill="#FFF"></circle>
+			<circle xmlns="http://www.w3.org/2000/svg" cx="16.5%" cy="15.3%" r="5" stroke="#FFF" stroke-width="3" fill="#9d9b9c"></circle>
+			<circle xmlns="http://www.w3.org/2000/svg" cx="82%" cy="26.5%" r="4" fill="#FFF"></circle>
+			<circle xmlns="http://www.w3.org/2000/svg" cx="68.5%" cy="28.9%" r="5" stroke="#FFF" stroke-width="3" fill="#9d9b9c"></circle>
+			<circle xmlns="http://www.w3.org/2000/svg" cx="11.56%" cy="39%" r="5" stroke="#FFF" stroke-width="3" fill="#9d9b9c"></circle>
+			<circle xmlns="http://www.w3.org/2000/svg" cx="82.97%" cy="47.6%" r="4" fill="#FFF"></circle>
+		</svg>
 	</div>
+	<div class="page page_1"><!--111111111111111111111111111111111111111111111111111111111111111111111111111111111-->
+		<div id="plane" class="frame ">
+			<div class="frame-inner">
+				<!--<img width="100%" src="img/plane.png">-->
+				<div class="sprite plane"></div>
+			</div>
+		</div>
+		<div id="tree" class="frame ">
+			<div class="frame-inner">
+				<img width="100%" src="img/tree.png">
+			</div>
+		</div>
+		<div id="circle" class="frame ">
+			<div class="frame-inner">
+				<img width="100%" src="img/circle.png">
+				<!--<div class="sprite circle"></div>-->
+			</div>
+		</div>
+		<div id="arrow" class="frame ">
+			<div class="frame-inner">
+				<img width="100%" src="img/arrow.png">
+				<!--<div class="sprite arrow"></div>-->
+			</div>
+		</div>
+		<div id="textBox1" class="frame ">
+			<div class="frame-inner">
+				<h1>他 </h1><h4>怀揣着</h4>
+			</div>
+		</div>
+		<div id="textBox2" class="frame ">
+			<div class="frame-inner">
+				<h3>梦想 </h3><h4>与</h4><h3> 热情</h3><h4>...</h4>
+			</div>
+		</div>
+	</div>
+
+	<div class="page page_2"><!--222222222222222222222222222222222222222222222222222222222222222222222222222222222-->
+		<div id="master" class="frame ">
+			<div class="frame-inner">
+				<!--<img width="100%" src="img/master.png">-->
+				<div class="sprite master"></div>
+			</div>
+		</div>
+		<div id="dinosaur" class="frame ">
+			<div class="frame-inner">
+				<!--<img width="100%" src="img/dinosaur.png">-->
+				<div class="sprite dinosaur"></div>
+			</div>
+		</div>
+		<div id="ps" class="frame ">
+			<div class="frame-inner">
+				<img width="100%" src="img/ps.png">
+				<!--<div class="sprite ps"></div>-->
+			</div>
+		</div>
+		<div id="ai" class="frame ">
+			<div class="frame-inner">
+				<img width="100%" src="img/ai.png">
+				<!--<div class="sprite ai"></div>-->
+			</div>
+		</div>
+		<div id="textBox3" class="frame ">
+			<div class="frame-inner">
+				<h1>他</h1><h4>是</h4><h3>射鸡湿？</h3>
+			</div>
+		</div>
+		<div id="textBox4" class="frame ">
+			<div class="frame-inner">
+				<h6>· UI设计（网站/App）<br/>· Light App设计<br/>· Banner设计
+				</h6>
+			</div>
+		</div>
+	</div>
+	<div class="page page_3"><!--333333333333333333333333333333333333333333333333333333333333333333333333333333333-->
+		<div id="cloud" class="frame ">
+			<div class="frame-inner">
+				<!--<img width="100%" src="img/cloud.png">-->
+				<div class="sprite cloud"></div>
+			</div>
+		</div>
+		<div id="ball" class="frame ">
+			<div class="frame-inner">
+				<!--<img width="100%" src="img/ball.png">-->
+				<div class="sprite ball"></div>
+			</div>
+		</div>
+		<div id="textBox5" class="frame ">
+			<div class="frame-inner">
+				<h1>他</h1><h4>是</h4><h3>动画狮？</h3>
+			</div>
+		</div>
+		<div id="fl" class="frame ">
+			<div class="frame-inner">
+				<!--<img width="100%" src="img/fl.png">-->
+				<div class="sprite fl"></div>
+			</div>
+		</div>
+		<div id="ae" class="frame ">
+			<div class="frame-inner">
+				<!--<img width="100%" src="img/ae.png">-->
+				<div class="sprite ae"></div>
+			</div>
+		</div>
+		<div id="textBox6" class="frame ">
+			<div class="frame-inner">
+				<h6>· Flash互动网站<br/>·富媒体动画设计
+				</h6>
+			</div>
+		</div>
+	</div>
+	<div class="page page_4">page<p>4</p></div>
+	<div class="page page_5">page<p>5</p></div>
+</div>
 </body>
 <script type="text/javascript" src="js/app.js"></script>
 <script type="text/javascript" src="js/simpleSlider.js"></script>
-<!--<script type="text/javascript" src="../clip-Box/zepto.clipBox.js"></script>-->
+<script type="text/javascript" src="js/fingerEraser.js"></script>
 <script type="text/javascript">
-    $(function(){
-        $('.main').simpleSlider({direction: 'v',itemSelector:'.page'});
-    });
+
+	$(function(){
+
+//            $('.page_2').addClass("current");
+				//声音播放
+				$("#musicBtn").on("switch",function(){
+					if($(this).hasClass("volumeOff"))
+					{
+						document.getElementById("bgAudio").pause();
+						$(this).removeClass("volumeOff").addClass("volumeOn");
+
+					}else
+					{
+						document.getElementById("bgAudio").play();
+						$(this).removeClass("volumeOn").addClass("volumeOff");
+					}
+				}).on("click",function(){
+					$(this).trigger("switch")
+				})
+				window.onload=function(){
+
+					$('.page_loading').animate({opacity:0},1200,"ease",function(){
+						$('.page_loading').remove();
+					});
+				};
+
+				//橡皮擦功能
+				var img =new Image;
+				img.src="img/dinosaur.png";
+				img.onload=function(){
+					$('.main').eraser({bgImage:img,percent:1,checkPng:true,success:function(canvas){
+						$(canvas).animate({opacity:0},1200,"ease",function(){
+							$(canvas).remove();
+							var init=false;
+							$('.main').simpleSlider({direction: 'v',percent:1,itemSelector:'.page',isCircle:false,onMoveEnd: function(index){ //滑动结束后事件
+								//console.log(index);
+								if(init!=true)
+								{
+									$('.main').addClass("inited");
+									init=true;
+								}
+
+							}
+							});
+						});
+						//橡皮擦擦完回调事件/函数
+
+					}});
+				}
+			}
+	);
 </script>
 <script>
-    $("#plane").addClass("animate");
-/*
-    setTimeout(function(){$("form").submit()},3000)
-*/
+	$(".page .frame").addClass("animate");
 </script>
 </html>
