@@ -176,7 +176,7 @@
                 function recordState(hash,flag){
                     var pageSelector=hashMap[window.location.hash];
                     g.changeHash=true;
-                    current=pageSelector&&pageSelector.slice(-1);
+                    g.current=pageSelector&&pageSelector.slice(-1)||1;
                     setTimeout(function(){
                         g.changeHash = false;
                     },100);
