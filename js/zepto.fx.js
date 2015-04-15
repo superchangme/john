@@ -120,4 +120,4 @@
   }
 
   testEl = null
-})(Zepto)
+})(typeof jQuery!="undefined"?jQuery:Zepto)

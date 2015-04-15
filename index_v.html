@@ -160,7 +160,7 @@
 </div>
 </body>
 <script type="text/javascript" src="js/app.js"></script>
-<script type="text/javascript" src="js/simpleSlider.js"></script>
+<script type="text/javascript" src="js/simpleSlider2.js"></script>
 <script type="text/javascript" src="js/fingerEraser.js"></script>
 <script type="text/javascript">
 
@@ -192,8 +192,19 @@
 				//橡皮擦功能
 				var img =new Image;
 				img.src="img/dinosaur.png";
+                $('.main').simpleSlider({direction: 'v',percent:1,itemSelector:'.page',isCircle:false,onMoveEnd: function(index){ //滑动结束后事件
+                    //console.log(index);
+                    var init=false;
+                    if(init!=true)
+                    {
+                        $('.main').addClass("inited");
+                        init=true;
+                    }
+
+                }
+                });/*
 				img.onload=function(){
-					$('.main').eraser({bgImage:img,percent:1,checkPng:true,success:function(canvas){
+					$('.main').eraser({bgImage:null,bgColor:"white",radius:18,percent:0.5,checkPng:true,success:function(canvas){
 						$(canvas).animate({opacity:0},1200,"ease",function(){
 							$(canvas).remove();
 							var init=false;
@@ -211,7 +222,7 @@
 						//橡皮擦擦完回调事件/函数
 
 					}});
-				}
+				}*/
 			}
 	);
 </script>

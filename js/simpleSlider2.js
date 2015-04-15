@@ -1,7 +1,6 @@
 /**
  * Created by johnyzhong on 14-10-30.
  */
-//外容器整体滑动
 ;(function($){
 
     //干掉页面bounce效果
@@ -20,26 +19,23 @@
             });
             return prefix;
         })();
-
-
-
     //directionLock 为了禁止未释放时反向滑和同时加载了横滑和竖滑的页面同时滑
     $.fn.simpleSlider = function(option){
-        if(typeof option ==="string"){
+  /*      if(typeof option ==="string"){
             var opts = $.extend({}, $.fn.simpleSlider.defaults, option),
                 $slider = this,
                 $items = $slider.children($slider.data("itemSelector")),
                 isDirectionV = $slider.data("isDirectionV"),
                 distance = $slider.data("distance");
             return init();
-        }
+        }*/
         var opts = $.extend({}, $.fn.simpleSlider.defaults, option), //配置选项
             $slider = this,
             router =$slider.data("router"),
-            $items = $slider.children(opts.itemSelector).css("position","absolute"),    //获取子元素数组
+            $items = $slider.children(opts.itemSelector),    //获取子元素数组
             step = 0,
             offset= 0,
-            offsetPer=100/*/$items.length*/,
+            offsetPer=100/$items.length,
             currentOffset= 0,
             effect =app.cubicBezier||"ease",
             isCircle=opts.isCircle,
@@ -57,15 +53,18 @@
             currentDir = undefined,
             forwardLast = false,
             isAnimate = false,
-            moveIndex=9999,
             homeLock =false,
             isFridge = $slider.hasClass("fridge-page"),
             isCabinet = $slider.hasClass("cabinet-page"),
             isDirectionV = (opts.direction == 'v'),
             distance = isDirectionV ? app.container.height() : app.container.width();
         $slider.data("itemSelector",opts.itemSelector);
-        $slider.data("isDirectionV",isDirectionV)
-
+        $slider.data("isDirectionV",isDirectionV);
+        $slider.data("distance",distance);
+        $(window).on("resize",function(){
+            distance = isDirectionV ? app.container.height() : app.container.width();
+            $slider.data("distance",distance);
+        });
         function init(){
             curItemIndex = opts.startIndex;
             var cssProp=isDirectionV?"height":"width";
@@ -78,6 +77,7 @@
             }); //遍历子元素设置样式
             opts.onMoveEnd(0);
             //设置container高度或宽度
+                $slider.css(cssProp,$items.length*100+"%");
         }//暴露出去以便初始化再调用
         init();
 
@@ -100,10 +100,10 @@
                 oldPosition = touch.clientY;
             }).on('touchend',function(e){
                 if(!isAnimate){
-                    if(forwardMove){
+                    if(step<0){
                         animateItem(-1);
                     }
-                    if(backMove){
+                    if(step>0&&curItemIndex!=0){
                         animateItem(1);
                     }
                 }
@@ -115,14 +115,15 @@
             var touch = e.touches[0],
                 curPosition = isDirectionV ? touch.clientY : touch.clientX,
                 gap = curPosition - oldPosition,
-                moveItemIndex=0,
+                moveItemIndex=curItemIndex,
                 newPosition = 0;
             step += gap;
 
-            newPosition = 100*step/(distance/**$items.length*/);
+            newPosition = 100*step/(distance*$items.length);
+            moveItem(moveItemIndex, newPosition);
 
-            if(gap<0 ){
-                forwardLast = !!(curItemIndex == itemLen-1 && !backMove);
+            /*if(gap<0 ){
+                forwardLast = curItemIndex == itemLen-1 && !backMove ? true : false;
                 if(backMove){//先向下/右逆向滑，过程中不放手再向上/左正向滑
                     moveItemIndex = curItemIndex==0 ? curItemIndex : curItemIndex-1;
                     moveItem(moveItemIndex, newPosition);
@@ -135,7 +136,7 @@
             //向下/右逆向滑
             if(gap>0 ){
                 //go to home page
-                backFirst = !!(curItemIndex == 0 && !forwardMove);
+                backFirst = curItemIndex == 0 && !forwardMove ? true : false;
                 if(forwardMove){//先向上/左正向滑，过程中不放手再向下/右逆向滑
                     moveItemIndex = curItemIndex==itemLen-1 ? curItemIndex : curItemIndex+1;
                     moveItem(moveItemIndex, newPosition);
@@ -144,7 +145,7 @@
                     backMove = true;
                     moveItem(moveItemIndex, newPosition);
                 }
-            }
+            }*/
         }
 
         //history back
@@ -168,9 +169,9 @@
                 nextIndex =  isEnd&&isCircle&&flag==-1 ? 0 : curItemIndex- flag,
                 duration=slideDuration;
             if(!isCircle&&isEnd&&flag==-1){
+                isAnimate=false;
                 return ;
             }
-
             if(canMove) {
                 if(isEnd&&flag==-1){
                     offset=0;
@@ -179,42 +180,37 @@
                     offset+=offsetPer*flag;
                 }
             }
-            moveItemEl.animate( {'translate3d': '0,0,0'},duration,effect,function(){
+            animProperty = isDirectionV ? {'translate3d': '0,'+offset+'%,0'} : {'translate3d': offset+'%,0,0'};
+            $slider.animate(animProperty,duration,effect,function(){
                 isAnimate=false;
                 currentOffset=offset;
+
                 if(canMove)
                 {
                     $items.eq(curItemIndex).removeClass("current");
-
                     curItemIndex = nextIndex;
                     currentItem = $items.eq(curItemIndex);
                     currentItem.addClass("current");
                     opts.onMoveEnd(curItemIndex);
                 }
+
                 if(router){
                     var hash=curItemIndex==0? "": curItemIndex;
                     app.recordState(router+hash);
                 }
-                moveItemEl=null;
             })
 
         }
 
         //设置随手被拖动的坐标
         function moveItem(moveItemIndex, newPosition){
-            if(isAnimate){return}
-            var isEnd=curItemIndex==itemLen-1&&isCircle&&newPosition< 0,moveOffset;
-            var nextPosition=curItemIndex<moveItemIndex ? distance+newPosition:isEnd?newPosition+distance:newPosition-distance;
-            if(!moveItemEl){
-                var initPer=curItemIndex<moveItemIndex ? 100:isEnd?100:-100;
-                var initTrans=isDirectionV?"translate3d("+'0,'+initPer+'%,0)':"translate3d("+initPer+'%,0,0)';
-                currentOffset=initPer;
-                moveItemEl=$items.eq(moveItemIndex).css(app.animPrefix+'transform',initTrans).css("z-index",moveIndex);
-            }
+            var isEnd=!isCircle&&
+                ((moveItemIndex==0&&newPosition>0)||((moveItemIndex==itemLen-1&&newPosition<0))),moveOffset;
+            //var nextPosition=curItemIndex<moveItemIndex ? distance+newPosition:isEnd?newPosition+distance:newPosition-distance;
             if(!isEnd){
-                moveOffset=currentOffset+parseFloat(newPosition.toFixed(5));
+                moveOffset=parseFloat(newPosition.toFixed(5))+currentOffset;
                 var trans=isDirectionV?"translate3d("+'0,'+moveOffset+'%,0)':"translate3d("+moveOffset+'%,0,0)';
-                moveItemEl.css(app.animPrefix+'transform',trans);
+                $slider.css(app.animPrefix+'transform',trans);
             }
         }
         //链式返回

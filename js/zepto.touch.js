@@ -55,7 +55,8 @@
         }
 
         $(document)
-            .bind('MSGestureEnd', function(e){
+            .bind('MSGestureEnd', function(ev){
+                e= ev.originalEvent;
                 var swipeDirectionFromVelocity =
                     e.velocityX > 1 ? 'Right' : e.velocityX < -1 ? 'Left' : e.velocityY > 1 ? 'Down' : e.velocityY < -1 ? 'Up' : null;
                 if (swipeDirectionFromVelocity) {
@@ -63,7 +64,8 @@
                     touch.el.trigger('swipe'+ swipeDirectionFromVelocity)
                 }
             })
-            .on('touchstart MSPointerDown pointerdown', function(e){
+            .on('touchstart MSPointerDown pointerdown', function(ev){
+                e= ev.originalEvent;
                 if((_isPointerType = isPointerEventType(e, 'down')) &&
                     !isPrimaryTouch(e)) return
                 firstTouch = _isPointerType ? e : e.touches[0]
@@ -86,7 +88,8 @@
                 // adds the current touch contact for IE gesture recognition
                 if (gesture && _isPointerType) gesture.addPointer(e.pointerId);
             })
-            .on('touchmove MSPointerMove pointermove', function(e){
+            .on('touchmove MSPointerMove pointermove', function(ev){
+                e= ev.originalEvent;
                 if((_isPointerType = isPointerEventType(e, 'move')) &&
                     !isPrimaryTouch(e)) return
                 firstTouch = _isPointerType ? e : e.touches[0]
@@ -97,7 +100,8 @@
                 deltaX += Math.abs(touch.x1 - touch.x2)
                 deltaY += Math.abs(touch.y1 - touch.y2)
             })
-            .on('touchend MSPointerUp pointerup', function(e){
+            .on('touchend MSPointerUp pointerup', function(ev){
+                e=ev.originalEvent;
                 if((_isPointerType = isPointerEventType(e, 'up')) &&
                     !isPrimaryTouch(e)) return
                 cancelLongTap()
@@ -162,4 +166,4 @@
         'doubleTap', 'tap', 'singleTap', 'longTap'].forEach(function(eventName){
             $.fn[eventName] = function(callback){ return this.on(eventName, callback) }
         })
-})(Zepto)
+})(typeof jQuery!="undefined"?jQuery:Zepto)
